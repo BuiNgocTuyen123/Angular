@@ -1,0 +1,56 @@
+{
+  "products": [
+    {
+      "id": "4ab3",
+      "name": "323",
+      "price": 5343,
+      "imageUrl": "./assets/images/bb2.jpg",
+      "detailImage1": "./assets/images/bb2_1.jpg",
+      "detailImage2": "./assets/images/bb2_1.jpg",
+      "detailImage3": "./assets/images/bupbe1_den4.jpg",
+      "detailImage4": "./assets/images/bb2_1.jpg",
+      "des": "đẹp",
+      "giagoc": null,
+      "categories":"nữ",
+      "category":"giày"
+    },
+    {
+      "id": "c0f7",
+      "name": "1212",
+      "price": 4343,
+      "imageUrl": "./assets/images/bb2_1.jpg",
+      "detailImage1": "./assets/images/ao1_1.jpg",
+      "detailImage2": "./assets/images/bb1_3.jpg",
+      "detailImage3": "./assets/images/bb1_2.jpg",
+      "detailImage4": "./assets/images/boot1_1.jpg",
+      "des": "2121",
+      "giagoc": 12121,
+      "categories":"nam",
+      "category":"giày tây"
+    }
+  ],
+  "users": [
+    {
+      "id": "1",
+      "email": "user1@example.com",
+      "password": "password1"
+    },
+    {
+      "id": "2",
+      "email": "user2@example.com",
+      "password": "password2"
+    },
+    {
+      "id": "aa05",
+      "email": "admin@gmail.com",
+      "password": "123456789"
+    },
+    {
+      "id": "4ee9",
+      "email": "admin1@gmail.com",
+      "password": "123456789"
+    }
+  ]
+
+
+}

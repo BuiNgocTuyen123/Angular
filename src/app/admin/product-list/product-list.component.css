@@ -1,0 +1,45 @@
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 10px; /* Location of the box */
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgba(0,0,0,0.4); /* Black w/ opacity */
+  }
+  .col-md-6 {
+    float: left;          /* Cấu hình cho các phần tử xếp theo hàng ngang */
+    width: 50%;           /* Đặt chiều rộng của mỗi phần tử là 50% */
+    box-sizing: border-box; /* Đảm bảo rằng việc thêm padding hoặc border không làm thay đổi chiều rộng tổng cộng */
+    clear: none;           /* Nhảy qua hàng mới khi đủ 2 phần tử */
+  }
+  .col-md-6:nth-child(2n+1) {
+    clear: both;
+  } 
+  /* Modal Content */
+  .modal-content {
+    background-color: #fefefe;
+    margin: auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+  }
+  
+  /* The Close Button */
+  .close {
+    color: #aaaaaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+  }
+  
+  .close:hover,
+  .close:focus {
+    color: #000;
+    text-decoration: none;
+    cursor: pointer;
+  }

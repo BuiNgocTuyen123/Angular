@@ -1,0 +1,14 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <label>Email:</label>
+  <input type="text" formControlName="email">
+  <label>Password:</label>
+  <div class="container">
+    <input type="password" formControlName="password" [type]="showPassword ? 'text' : 'password'" placeholder="Nhập Mật Khẩu" required>
+    <span class="show-btn" (click)="toggleShowPassword()">
+      <i class="fas" [class.fa-eye-slash]="showPassword" [class.fa-eye]="!showPassword"></i>
+    </span>
+    <button type="submit">Login</button>
+  </div>
+</form>
+<a routerLink="/register">Tạo tài khoản mới</a>

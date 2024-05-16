@@ -1,0 +1,186 @@
+
+<div class="row mt-3" >
+  <div class="col-md-6" style="margin-top: 200px;">
+      <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#modelId">
+          Add new
+      </button>
+  </div>
+</div>
+
+<div class="row mt-3 pl-3 pr-3">
+  <table class="table table-bordered">
+      <thead>
+          <tr>
+              <th>Image</th>
+              <th>Product</th>
+              <th>Price </th>
+              <th>edit </th>
+              <th>delete </th>
+          </tr>
+      </thead>
+      <tbody>
+          <tr *ngFor="let item of productList; let i = index;">
+              <td scope="row">
+                  <img src="{{item.imageUrl}}" width="50px" alt="" srcset="">
+              </td>
+              <td>{{item.name}}</td>
+              <td>{{item.price}}</td>
+              <td><span class="btn btn-primary btn-sm mr-1" type="button" (click)="Edit(i);IsAdd=0;IsUpdate=2"
+                data-toggle="modal" data-target="#modelId">Edit</span></td>
+              <td><button class="btn btn-danger" (click)="deleteProduct(item)">delete</button></td>
+              </tr>
+      </tbody>
+  </table>
+</div>
+
+<div class="modal fade" id="modelId" tabindex="-1" role="dialog" aria-labelledby="modelTitleId" aria-hidden="true" #productModal>
+    <div class="modal-dialog" role="document">
+      <div class="modal-content">
+          <div class="modal-header">
+              <h5 class="modal-title">Product</h5>
+              <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                  <span aria-hidden="true">&times;</span>
+              </button>
+          </div>
+          <div class="modal-body">
+              <form [formGroup]="formProduct">
+                  <div class="row">
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <label for="">ProductName</label>
+                              <input type="text" [formControl]="formProduct.controls.name" (keyup)="isValidForm()" placeholder="Name">
+
+                          </div>
+                      </div>
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <label for="">Price</label>
+                              <input type="number" [formControl]="formProduct.controls.price" name="" id=""
+                                  class="form-control" placeholder="" aria-describedby="helpId">
+                              <!--<smallid="helpId"class="text-muted">Helptext</small>-->
+                          </div>
+                      </div>
+                      <div class="form-group">
+                        <div class="col-md-6">Product Type
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="productType" value="new"
+                          formControlName="productType" [ngClass]="{'is-valid': formProduct.controls.productType.valid}">
+                          <label class="form-check-label" for="new">
+                            New Product
+                          </label>
+                        </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" name="productType" value="discount"
+                          formControlName="productType" [ngClass]="{'is-valid': formProduct.controls.productType.valid}">
+                          <label class="form-check-label" for="discount">
+                            Discounted Product
+                          </label>
+                        </div>
+                        <div class="col-md-6" *ngIf="formProduct.controls.productType.value === 'discount'">
+                            <div class="form-group">
+                                <label for="">Giá gốc</label>
+                                <input type="number" [formControl]="formProduct.controls.giagoc" class="form-control" placeholder="Giá gốc" aria-describedby="helpId">
+                            </div>
+                        </div>
+                      </div>
+                    </div>
+                      <div class="col-md-6">
+                          <div class="form-group">
+                              <label for="">Ảnh đại diện</label>
+                              <input type="file" name="" id="" class="form-control" (change)="onChange($event)"
+                                  placeholder="" aria-describedby="helpId">
+                              <!--<smallid="helpId"class="text-muted">Helptext</small>-->
+                          </div>
+                          <input hidden type="text" [formControl]="formProduct.controls.imageUrl">
+                          <img [src]="file" width="50px" height="50px" alt="">
+                      </div>
+                      <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Ảnh chi tiết 1</label>
+                            <input type="file" name="" id="" class="form-control" (change)="onChange1($event)"
+                                placeholder="" aria-describedby="helpId">
+                            <!--<smallid="helpId"class="text-muted">Helptext</small>-->
+                        </div>
+                        <input hidden type="text" [formControl]="formProduct.controls.detailImage1">
+      
+                        <img [src]="file1" width="20px" height="20px" alt="">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Ảnh chi tiết 2</label>
+                            <input type="file" name="" id="" class="form-control" (change)="onChange2($event)"
+                                placeholder="" aria-describedby="helpId">
+                            <!--<smallid="helpId"class="text-muted">Helptext</small>-->
+                        </div>
+                        <input hidden type="text" [formControl]="formProduct.controls.detailImage2">
+           
+                        <img [src]="file2" width="20px" height="20px" alt="">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Ảnh chi tiết 3</label>
+                            <input type="file" name="" id="" class="form-control" (change)="onChange3($event)"
+                                placeholder="" aria-describedby="helpId">
+                            <!--<smallid="helpId"class="text-muted">Helptext</small>-->
+                        </div>
+                        <input hidden type="text" [formControl]="formProduct.controls.detailImage3">
+        
+                        <img [src]="file3" width="20px" height="20px" alt="">
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="">Ảnh chi tiết 4</label>
+                            <input type="file" name="" id="" class="form-control" (change)="onChange4($event)"
+                                placeholder="" aria-describedby="helpId">
+                            <!--<smallid="helpId"class="text-muted">Helptext</small>-->
+                        </div>
+                        <input hidden type="text" [formControl]="formProduct.controls.detailImage4">
+
+                        <img [src]="file4" width="20px" height="20px" alt="">
+                    </div>
+    
+                    <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="">Mô tả</label>
+                            <textarea [formControl]="formProduct.controls.des" placeholder="Mô tả" class="form-control"></textarea>
+                        </div>
+                    </div>
+               
+                    <div class="form-group">
+                        <label for="">Gender</label>
+                        <div class="form-check">
+                            <input class="form-check-input" type="radio" formControlName="categories" value="nữ" (change)="onGenderChange($event)">
+                            <label class="form-check-label" for="nữ">Nữ</label>
+                          </div>
+                        <div class="form-check">
+                          <input class="form-check-input" type="radio" formControlName="categories" value="nam" (change)="onGenderChange($event)">
+                          <label class="form-check-label" for="nam">Nam</label>
+                        </div>
+                     
+                      </div>
+                      
+                      <div class="form-group" *ngIf="formProduct.controls.categories.value">
+                        <label for="">Category</label>
+                        <select class="form-control" formControlName="category">
+                          <option *ngFor="let category of (formProduct.controls.categories.value === 'nam' ? uniqueCategoriesNam : uniqueCategoriesNu)">
+                            {{ category }}
+                          </option>
+                        </select>
+                      </div>
+                  </div>
+              </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-primary" 
+            *ngIf="IsAdd==1" 
+            [disabled]="!isValidForm()" 
+            (click)="Add()">
+            Add
+    </button>
+              <button type="button" class="btn btn-primary" *ngIf="IsUpdate==2" (click)="Update()">Save </button>
+              <button id="closeModalButton" type="button" class="btn btn-secondary" data-dismiss="modal" style="display: none;">Close</button>
+
+          </div>
+      </div>
+  </div>
+</div>

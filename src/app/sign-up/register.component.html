@@ -1,0 +1,21 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
+<form [formGroup]="registerForm" (ngSubmit)="onSubmit()">
+    <label>Email:</label>
+    <input type="text" formControlName="email">
+    <label>Password:</label>
+    <div>
+        <input [type]="showPassword ? 'text' : 'password'" formControlName="password">    <span class="show-btn" (click)="toggleShowPassword()">
+        <i class="fas" [class.fa-eye-slash]="showPassword" [class.fa-eye]="!showPassword"></i>
+      </span>
+    </div>
+    <label>Confirm Password:</label>
+    <div>
+        <input [type]="showPassword ? 'text' : 'password'" formControlName="confirmPassword">
+    <span class="show-btn" (click)="toggleShowPassword()">
+        <i class="fas" [class.fa-eye-slash]="showPassword" [class.fa-eye]="!showPassword"></i>
+      </span>
+    </div>
+    <small *ngIf="registerForm.hasError('notSame')" class="error-message">Mật khẩu chưa trùng khớp.</small>
+        <button type="submit" [disabled]="!registerForm.valid">Register</button>
+</form>
+<a routerLink="/login">Already have an account? Log in here.</a>
