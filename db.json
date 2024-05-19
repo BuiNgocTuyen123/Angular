@@ -724,7 +724,32 @@
     {
       "id": "4ee9",
       "email": "admin1@gmail.com",
-      "password": "123456789"
+      "password": "123456789",
+      "carts":[{
+        "id": "eac3",
+        "name": "GIÀY TÂY DERBY ĐÔNG HẢI VIỀN CHỈ TINH XẢO",
+        "email": "admin1@gmail.com",
+        "imageUrl": "./assets/images/gtn2_nau.jpg",
+        "price": 530000,
+        "giaoac": null,
+        "size": 37,
+        "quantity": 1,
+        "type": 0,
+        "initialQuantity": 1,
+        "initialSize": 38
+      },{
+        "id": "eac3",
+        "name": "GIÀY TÂY DERBY ĐÔNG HẢI VIỀN CHỈ TINH XẢO",
+        "email": "admin1@gmail.com",
+        "imageUrl": "./assets/images/gtn2_nau.jpg",
+        "price": 530000,
+        "giaoac": null,
+        "size": 37,
+        "quantity": 1,
+        "type": 0,
+        "initialQuantity": 1,
+        "initialSize": 38
+      }]
     }
   ],
   "cart": [
