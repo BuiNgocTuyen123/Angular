@@ -740,30 +740,6 @@
       "type": 0,
       "initialQuantity": 1,
       "initialSize": 38
-    },
-    {
-      "id": "ce23",
-      "name": "GIÀY TÂY NAM ZUCIANI DÁNG BUCKS NĂNG ĐỘNG",
-      "email": "admin@gmail.com",
-      "imageUrl": "./assets/images/gtn3_nau.jpg",
-      "price": 430000,
-      "giaoac": null,
-      "size": 40,
-      "quantity": 1,
-      "type": 0,
-      "subtotal": 0
-    },
-    {
-      "id": "9978",
-      "name": "GIÀY TÂY NAM ĐÔNG HẢI LOAFER PHỐI PHỤ KIỆN",
-      "email": "admin@gmail.com",
-      "imageUrl": "./assets/images/gtn1_den.jpg",
-      "price": 610000,
-      "giaoac": null,
-      "size": 40,
-      "quantity": 1,
-      "type": 0,
-      "subtotal": 0
     }
   ]
 }
