@@ -1,0 +1,55 @@
+<body>
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <header-product></header-product>
+    <div class="container">
+      <div class="row">
+        <div class="col md-6">
+          <h2>Kiểm tra hóa đơn</h2>
+          <table class="table table-striped">
+            <thead>
+              <tr>
+                <th>Image</th>
+                <th>Name</th>
+                <th>Size</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Total Price</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr *ngFor="let cart of carts">
+                <td><img [src]="cart.imageUrl" alt="Product image" style="width: 50px;"></td>
+                <td>{{cart.name}}</td>
+                <td>{{cart.size}}</td>
+                <td>{{cart.quantity}}</td>
+                <td>{{cart.price}}</td>
+                <td>{{cart.quantity * cart.price}}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="col md-6">
+          <h2>Thông tin của bạn</h2>
+          <form (submit)="onFormSubmit()">
+            <div class="form-group">
+              <label>Họ và Tên</label>
+              <input class="form-control" [(ngModel)]="customer.name" name="name" required>
+            </div>
+            <div class="form-group">
+              <label>Số Điện Thoại</label>
+              <input class="form-control" [(ngModel)]="customer.phoneNumber" name="phoneNumber" required>
+            </div>
+            <div class="form-group">
+              <label>Địa chỉ</label>
+              <input class="form-control" [(ngModel)]="customer.address" name="address" required>
+            </div>
+            <div class="form-group">
+              <label>Email</label>
+              <input class="form-control" [(ngModel)]="customer.email" name="email" required readonly>
+            </div>
+            <button class="btn btn-success">Thanh Toán</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </body>

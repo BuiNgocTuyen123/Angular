@@ -1,55 +1,9 @@
-<div class="navbar" *ngIf="isLoggedIn">
-  <a routerLink="/">Home</a>
-  <a routerLink="/all-products">All Products</a>
-  <div class="dropdown">
-    <button class="dropbtn">Nam</button>
-    <div class="dropdown-content">
-      <ng-container *ngFor="let category of uniqueCategoriesNam">
-        <a href="#">{{ category }}</a>
-      </ng-container>
-    </div>
+<body>
+<header-product></header-product>
+<div class="products-container row">
+  <div class="col-md-3" *ngFor="let product of products">
+    <app-product-card [product]="product"></app-product-card>
   </div>
-  <div class="dropdown">
-    <button class="dropbtn">Nữ</button>
-    <div class="dropdown-content">
-      <ng-container *ngFor="let category of uniqueCategoriesNu">
-        <a href="#">{{ category }}</a>
-      </ng-container>
-    </div>
-  </div>
-  <div class="search-container">
-    <input type="text" placeholder="Search..">
-    <button type="submit"><i class="fa fa-search"></i></button>
-  </div>
-  <a routerLink="/cart">Cart</a>
-  <a routerLink="/account">{{email}}</a>
-  <button (click)="logout()">Log out</button>
 </div>
-
-<div class="navbar" *ngIf="!isLoggedIn">
-  <a routerLink="/">Home</a>
-  <a routerLink="/all-products">All Products</a>
-  <div class="dropdown">
-    <button class="dropbtn">Nam</button>
-    <div class="dropdown-content">
-      <ng-container *ngFor="let category of uniqueCategoriesNam">
-        <a href="#">{{ category }}</a>
-      </ng-container>
-    </div>
-  </div>
-  <div class="dropdown">
-    <button class="dropbtn">Nữ</button>
-    <div class="dropdown-content">
-      <ng-container *ngFor="let category of uniqueCategoriesNu">
-        <a href="#">{{ category }}</a>
-      </ng-container>
-    </div>
-  </div>
-  <div class="search-container">
-    <input type="text" placeholder="Search..">
-    <button type="submit"><i class="fa fa-search"></i></button>
-  </div>
-  <a routerLink="/cart">Cart</a>
-  <button (click)="navigateToLogin()">Login</button>
-</div>
-<router-outlet></router-outlet>
+<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+</body>

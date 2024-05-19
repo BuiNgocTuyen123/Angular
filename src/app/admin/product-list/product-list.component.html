@@ -1,9 +1,10 @@
 
 <div class="row mt-3" >
   <div class="col-md-6" style="margin-top: 200px;">
-      <button type="button" class="btn btn-primary btn-md" data-toggle="modal" data-target="#modelId">
-          Add new
-      </button>
+    <button type="button" class="btn btn-primary btn-md" (click)="openAddModal()" data-toggle="modal" data-target="#modelId">
+        Add new
+    </button>
+    
   </div>
 </div>
 
@@ -62,27 +63,31 @@
                       </div>
                       <div class="form-group">
                         <div class="col-md-6">Product Type
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" name="productType" value="new"
-                          formControlName="productType" [ngClass]="{'is-valid': formProduct.controls.productType.valid}">
-                          <label class="form-check-label" for="new">
-                            New Product
-                          </label>
-                        </div>
-                        <div class="form-check">
-                          <input class="form-check-input" type="radio" name="productType" value="discount"
-                          formControlName="productType" [ngClass]="{'is-valid': formProduct.controls.productType.valid}">
-                          <label class="form-check-label" for="discount">
-                            Discounted Product
-                          </label>
-                        </div>
-                        <div class="col-md-6" *ngIf="formProduct.controls.productType.value === 'discount'">
-                            <div class="form-group">
-                                <label for="">Giá gốc</label>
-                                <input type="number" [formControl]="formProduct.controls.giagoc" class="form-control" placeholder="Giá gốc" aria-describedby="helpId">
-                            </div>
-                        </div>
-                      </div>
+                            <div class="form-check">
+                                <input class="form-check-input" type="radio" name="productType" value="new"
+                                       formControlName="productType" [checked]="formProduct.controls.productType.value === 'new'"
+                                       (change)="onProductTypeChange($event)">
+                                <label class="form-check-label" for="new">
+                                  New Product
+                                </label>
+                              </div>
+                              <div class="form-check">
+                                <input class="form-check-input" type="radio" name="productType" value="discount"
+                                       formControlName="productType" [checked]="formProduct.controls.productType.value === 'discount'"
+                                       (change)="onProductTypeChange($event)">
+                                <label class="form-check-label" for="discount">
+                                  Discounted Product
+                                </label>
+                              </div>
+                              
+                              <div class="col-md-6" *ngIf="formProduct.controls.productType.value === 'discount'">
+                                <div class="form-group">
+                                  <label for="">Giá gốc</label>
+                                  <input type="number" [formControl]="formProduct.controls.giagoc" class="form-control" placeholder="Giá gốc" aria-describedby="helpId">
+                                </div>
+                              </div>
+                              
+                    </div>
                     </div>
                       <div class="col-md-6">
                           <div class="form-group">
@@ -147,9 +152,9 @@
                     </div>
                
                     <div class="form-group">
-                        <label for="">Gender</label>
+                        <label for="">Danh mục</label>
                         <div class="form-check">
-                            <input class="form-check-input" type="radio" formControlName="categories" value="nữ" (change)="onGenderChange($event)">
+                            <input class="form-check-input" type="radio" formControlName="categories" value="nu" (change)="onGenderChange($event)">
                             <label class="form-check-label" for="nữ">Nữ</label>
                           </div>
                         <div class="form-check">
@@ -161,24 +166,23 @@
                       
                       <div class="form-group" *ngIf="formProduct.controls.categories.value">
                         <label for="">Category</label>
-                        <select class="form-control" formControlName="category">
-                          <option *ngFor="let category of (formProduct.controls.categories.value === 'nam' ? uniqueCategoriesNam : uniqueCategoriesNu)">
-                            {{ category }}
-                          </option>
+                        <select class="form-control" formControlName="category" (change)="onCategoryChange($event)">
+                            <option *ngIf="IsUpdate" [value]="formProduct.controls.category.value">{{ formProduct.controls.category.value }}</option>
+                            <option *ngFor="let category of getRelevantCategories()" [value]="category" [selected]="category === formProduct.controls.category.value">
+                                {{ category }}
+                              </option>
+                          <option value="Add New">Thêm mới</option>
                         </select>
+                        <input type="text" *ngIf="formProduct.controls.category.value === 'Add New'" class="form-control mt-2" [formControl]="formProduct.controls.newCategory" (change)="onNewCategoryChange($event)" placeholder="Nhập danh mục mới">
                       </div>
                   </div>
               </form>
           </div>
           <div class="modal-footer">
-            <button type="button" class="btn btn-primary" 
-            *ngIf="IsAdd==1" 
-            [disabled]="!isValidForm()" 
-            (click)="Add()">
-            Add
-    </button>
-              <button type="button" class="btn btn-primary" *ngIf="IsUpdate==2" (click)="Update()">Save </button>
-              <button id="closeModalButton" type="button" class="btn btn-secondary" data-dismiss="modal" style="display: none;">Close</button>
+            <button type="button" class="btn btn-primary" *ngIf="IsAdd" [disabled]="!isValidForm()" (click)="Add()">Add</button>
+
+            <button type="button" class="btn btn-primary" *ngIf="IsUpdate" (click)="Update()">Save</button>
+            <button id="closeModalButton" type="button" class="btn btn-secondary" data-dismiss="modal" style="display: none;">Close</button>
 
           </div>
       </div>

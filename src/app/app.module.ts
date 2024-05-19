@@ -19,6 +19,11 @@ import { ProductListAdminComponent} from './admin/product-list/product-list.comp
 import { DashboardComponent } from './admin/dashboard/dashboard.component';
 import { UserListComponent } from './admin/user-list/user-list.component';
 import { OrderComponent } from './admin/order/order.component';
+import { HeaderComponent } from './view/Header.component';
+import { ProductDetailComponent } from './product/product-detail/product-detail.component';
+import { CartComponent } from './cart/cart.component';
+import { FormsModule } from '@angular/forms';
+import { OrderrComponent } from './order/order.component';
 @NgModule({
   declarations: [
     AppComponent,
@@ -31,8 +36,12 @@ import { OrderComponent } from './admin/order/order.component';
     HeaderAdminComponent,
     ProductListAdminComponent,
     DashboardComponent,
+    HeaderComponent,
     UserListComponent,
-    OrderComponent
+    OrderComponent,
+    ProductDetailComponent,
+    CartComponent,
+    OrderrComponent
   ],
   imports: [
     BrowserModule,
@@ -40,7 +49,8 @@ import { OrderComponent } from './admin/order/order.component';
     HttpClientModule,
     CommonModule,
     RouterModule,
-    ReactiveFormsModule
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [AuthGuard],
   bootstrap: [AppComponent]

@@ -6,6 +6,9 @@ import { catchError } from 'rxjs/operators';
 import { of } from 'rxjs';
 import { finalize } from 'rxjs/operators';
 import Swal from 'sweetalert2';
+import { fromEvent } from 'rxjs';
+
+
 
 
 @Component({
@@ -19,32 +22,76 @@ export class ProductListAdminComponent implements OnInit {
   uniqueCategoriesNam: string[] = [];
   uniqueCategoriesNu: string[] = []; // thêm dòng này
   formProduct = new FormGroup({
-    name: new FormControl<string>(''),
-    price: new FormControl<number>(0),
-    imageUrl: new FormControl<string>(''),
-    detailImage1: new FormControl<string>(''),
-    detailImage2: new FormControl<string>(''),
-    detailImage3: new FormControl<string>(''),
-    detailImage4: new FormControl<string>(''),
-    productType: new FormControl(null, Validators.required),
-    des: new FormControl<string>('', Validators.required),
-    giagoc: new FormControl(null),
-    categories: new FormControl(null, Validators.required),  // Thêm trường 'gender'
-    category: new FormControl(null, Validators.required),  // Thêm trường 'category'
+    name: new FormControl<string | null>(''),
+    price: new FormControl<number | null>(0),
+    imageUrl: new FormControl<string | null>(''),
+    detailImage1: new FormControl<string | null>(''),
+    detailImage2: new FormControl<string | null>(''),
+    detailImage3: new FormControl<string | null>(''),
+    detailImage4: new FormControl<string | null>(''),
+    productType: new FormControl<string | null>(null, Validators.required),
+    des: new FormControl<string | null>('', Validators.required),
+    giagoc: new FormControl<number | null>(null),
+    categories: new FormControl<string | null>(null, Validators.required),
+    category: new FormControl<string | null>(null, Validators.required),
+    newCategory: new FormControl<string | null>('', []),  // No validators needed here
+    
+    
   })
-
-  onGenderChange(event: any) {
-    let categories = event.target.value;
-
-    if (categories === 'nam') {
-      const categoriesNam = this.productList.filter(product => product.categories.toLowerCase() === 'nam').map(product => product.category);
-      this.uniqueCategoriesNam = Array.from(new Set(categoriesNam));
-    } else if (categories === 'nữ') {
-      const categoriesNu = this.productList.filter(product => product.categories.toLowerCase() === 'nữ').map(product => product.category);
-      this.uniqueCategoriesNu = Array.from(new Set(categoriesNu));
+  onNewCategoryChange(event: any) {
+    let newCategory = event.target.value;
+    if (this.formProduct.controls['category'].value === 'Add New') {
+      this.formProduct.controls['category'].setValue(newCategory);
     }
+  }
   
+  onCategoryChange(event: any) {
+    let selectedCategory = event.target.value;
+    if (selectedCategory !== 'Add New') {
+      this.formProduct.controls['newCategory'].reset();
+      this.formProduct.controls['category'].setValue(selectedCategory);
+    }
+  }
+onGenderChange(event: any) {
+  let gender = event.target.value;
+  console.log('Selected gender:', gender); // Debugging output
+
+  if (gender === 'nam') {
+    const categoriesNam = this.productList.filter(product => product.categories.toLowerCase() === 'nam').map(product => product.category);
+    this.uniqueCategoriesNam = Array.from(new Set(categoriesNam));
+    console.log('Categories for Nam:', this.uniqueCategoriesNam); // Debugging output
+  } else if (gender === 'nu') {
+    const categoriesNu = this.productList.filter(product => product.categories.toLowerCase() === 'nu').map(product => product.category);
+    this.uniqueCategoriesNu = Array.from(new Set(categoriesNu));
+    console.log('Categories for Nữ:', this.uniqueCategoriesNu); // Debugging output
+  }
 }
+resetForm() {
+  this.formProduct.reset({
+    name: null,
+    price: 0,
+    imageUrl: null,
+    detailImage1: null,
+    detailImage2: null,
+    detailImage3: null,
+    detailImage4: null,
+    productType: null,
+    des: '',
+    giagoc: null,
+    categories: null,
+    category: null,
+    newCategory: ''
+  });
+  this.file = '';
+  this.file1 = '';
+  this.file2 = '';
+  this.file3 = '';
+  this.file4 = '';
+  this.IsAdd = 1;
+  this.IsUpdate = 0;
+}
+
+  
   file: string = '';
   file1: string = '';
   file2: string = '';
@@ -63,6 +110,7 @@ export class ProductListAdminComponent implements OnInit {
     this.formProduct.controls['detailImage2'].setValue(this.file2);
     this.formProduct.controls['detailImage3'].setValue(this.file3);
     this.formProduct.controls['detailImage4'].setValue(this.file4);
+  
     this.prod.UpdateProduct(this.id, this.formProduct.value).subscribe(
       res => {
         Swal.fire({
@@ -72,6 +120,7 @@ export class ProductListAdminComponent implements OnInit {
           confirmButtonText: 'OK'
         }).then((result) => {
           if (result.isConfirmed) {
+            this.resetForm();  // Reset the form on successful update
             const closeButton = document.getElementById('closeModalButton');
             if (closeButton) {
               closeButton.click();  // Safely trigger the hidden close button
@@ -91,21 +140,41 @@ export class ProductListAdminComponent implements OnInit {
         });
       }
     );
+  }
+  
+
+
+
+
+ngOnInit(): void {
+  this.formProduct.controls['imageUrl'].setValue('./assets/images');
+  this.formProduct.controls['detailImage1'].setValue('./assets/images');
+  this.formProduct.controls['detailImage2'].setValue('./assets/images');
+  this.formProduct.controls['detailImage3'].setValue('./assets/images');
+  this.formProduct.controls['detailImage4'].setValue('./assets/images');
+
+  this.prod.getProduct().subscribe((data) => {
+    this.productList = data;
+    console.log('Current Product List:', this.productList); // Log the entire productList
+    const categoriesNu = this.productList.filter(product => product.categories.toLowerCase() === 'nu').map(product => product.category);
+    this.uniqueCategoriesNu = Array.from(new Set(categoriesNu));
+    console.log('Categories for Nữ:', this.uniqueCategoriesNu); // Debug output
+  });
+  const categoriesNam = this.productList.filter(product => product.categories.toLowerCase() === 'nam').map(product => product.category);
+    this.uniqueCategoriesNam = Array.from(new Set(categoriesNam));
+    fromEvent(this.productModal.nativeElement, 'hidden.bs.modal').subscribe(() => {
+      this.resetForm();
+    });
 }
 
-
-
-
-  ngOnInit(): void {
-    this.formProduct.controls['imageUrl'].setValue('./assets/images');
-    this.formProduct.controls['detailImage1'].setValue('./assets/images');
-    this.formProduct.controls['detailImage2'].setValue('./assets/images');
-    this.formProduct.controls['detailImage3'].setValue('./assets/images');
-    this.formProduct.controls['detailImage4'].setValue('./assets/images');
-    this.prod.getProduct().subscribe((data) => {
-      this.productList = data;
-    })
+getRelevantCategories() {
+  // This function returns the categories for the selected gender excluding the currently edited category to avoid duplication
+  if (this.formProduct.controls['categories'].value === 'nam') {
+    return this.uniqueCategoriesNam.filter(c => c !== this.formProduct.controls['category'].value);
+  } else {
+    return this.uniqueCategoriesNu.filter(c => c !== this.formProduct.controls['category'].value);
   }
+}
 
   showRating(event: any) {
     alert(`${event}`)
@@ -152,7 +221,7 @@ export class ProductListAdminComponent implements OnInit {
         }
       );
     } else {
-      alert('Vui lòng điền đầy đủ các trường.');
+      alert('Bạn chưa chọn danh mục.');
     }
   }
   
@@ -161,22 +230,39 @@ export class ProductListAdminComponent implements OnInit {
  public showModal: boolean = false;
  id: any
  Edit(index: number) {
-  this.id = this.productList[index].id
-  this.formProduct.controls.name.setValue(this.productList[index].name)
-  this.formProduct.controls.price.setValue(this.productList[index].price)
-  this.formProduct.controls['imageUrl'].setValue(this.productList[index].imageUrl)
-  this.formProduct.controls['detailImage1'].setValue(this.productList[index].detailImage1)
-  this.formProduct.controls['detailImage2'].setValue(this.productList[index].detailImage2)
-  this.formProduct.controls['detailImage3'].setValue(this.productList[index].detailImage3)
-  this.formProduct.controls['detailImage4'].setValue(this.productList[index].detailImage4)
+  const product = this.productList[index];
+  this.id = product.id;
+  // existing values
+  this.formProduct.controls['name'].setValue(product.name);
+  this.formProduct.controls['price'].setValue(product.price);
+  this.formProduct.controls['des'].setValue(product.des);
+  this.formProduct.controls['categories'].setValue(product.categories);
+  this.formProduct.controls['category'].setValue(product.category);
+  // Images
+  this.formProduct.controls['imageUrl'].setValue(product.imageUrl);
+  this.formProduct.controls['detailImage1'].setValue(product.detailImage1);
+  this.formProduct.controls['detailImage2'].setValue(product.detailImage2);
+  this.formProduct.controls['detailImage3'].setValue(product.detailImage3);
+  this.formProduct.controls['detailImage4'].setValue(product.detailImage4);
 
-  this.file = this.productList[index].imageUrl
-  this.file1 = this.productList[index].detailImage1
-  this.file2 = this.productList[index].detailImage2
-  this.file3 = this.productList[index].detailImage3
-  this.file4 = this.productList[index].detailImage4
+  this.file = product.imageUrl;
+  this.file1 = product.detailImage1;
+  this.file2 = product.detailImage2;
+  this.file3 = product.detailImage3;
+  this.file4 = product.detailImage4;
 
+  // Product type and original price
+  if (product.giagoc == null) {
+    this.formProduct.controls['productType'].setValue('new');
+  } else {
+    this.formProduct.controls['productType'].setValue('discount');
+    this.formProduct.controls['giagoc'].setValue(product.giagoc);
+  }
+  this.IsAdd = 0;
+  this.IsUpdate = 1;
+  this.openModal();  // Open the modal with the populated data
 }
+
 openModal() {
   if (this.productModal && this.productModal.nativeElement) {
     this.productModal.nativeElement.style.display = 'block';
@@ -217,16 +303,32 @@ isValidForm() {
 
 
 closeModal() {
+  this.resetForm();
   if (this.productModal.nativeElement) {
-      this.productModal.nativeElement.classList.remove('show');
-      this.productModal.nativeElement.style.display = 'none';
-      document.body.classList.remove('modal-open');
-      const backDrop = document.getElementsByClassName('modal-backdrop')[0];
-      if (backDrop) {
-          backDrop.remove();
-      }
+    this.productModal.nativeElement.classList.remove('show');
+    this.productModal.nativeElement.style.display = 'none';
+    document.body.classList.remove('modal-open');
+    const backDrop = document.getElementsByClassName('modal-backdrop')[0];
+    if (backDrop) {
+      backDrop.remove();
+    }
   }
 }
+
+onProductTypeChange(event: any) {
+  const selectedType = event.target.value;
+  if (selectedType === 'new') {
+    this.formProduct.controls['giagoc'].reset();
+  }
+}
+
+openAddModal() {
+  this.resetForm();  // Reset the form to ensure it's clean
+  this.IsAdd = 1;  // Set to add mode
+  this.IsUpdate = 0;  // Ensure it's not in update mode
+  this.openModal();  // Now open the modal
+}
+
 
 
   onChange(event: any) {

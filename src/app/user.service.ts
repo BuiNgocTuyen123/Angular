@@ -4,11 +4,13 @@ import { Observable } from 'rxjs';
 import { map } from 'rxjs/operators';
 import { User } from './login/user.interface';
 import { BehaviorSubject } from 'rxjs';
+import { CanActivate } from '@angular/router';
+
 
 @Injectable({
   providedIn: 'root'
 })
-export class UserService {
+export class UserService implements CanActivate{
   private baseUrl = 'http://localhost:3000';
   private loggedInSource = new BehaviorSubject<boolean>(false);
   private emailSource = new BehaviorSubject<string>('');
@@ -17,7 +19,9 @@ export class UserService {
   email = this.emailSource.asObservable();
 
   constructor(private http: HttpClient) {}
-
+  canActivate(): boolean {
+    return this.loggedInSource.getValue();
+}
   getEmail(): Observable<string> {
     return this.emailSource.asObservable(); // Correctly returning the observable from the BehaviorSubject
   }

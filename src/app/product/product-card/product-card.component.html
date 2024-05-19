@@ -1,4 +1,10 @@
+<a [routerLink]="['/product-detail', product.id]">
 <div class="product-card">
-  <h3>{{ product.name }}</h3>
-  <p>${{ product.price }}</p>
+  <img src="{{product.imageUrl}}" alt="{{product.name}}">
+  <h3>{{product.name}}</h3>
+  <div class="prices">
+    <p class="origin-price" *ngIf="product.giagoc">$ {{product.giagoc}}</p>
+    <p class="current-price">$ {{product.price}}</p>
+  </div>
 </div>
+</a>
